@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { responseHandler } from "./responseHandler";
 import { AppError } from "../../../../errors/AppError";
+import { ExternalError } from "../../../../errors/ExternalError";
 
 export function errorHandler(
-  err: AppError | Error,
+  err: AppError | ExternalError | Error,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  if (err instanceof AppError) {
+  if (err instanceof AppError || err instanceof ExternalError) {
     return res.status(err.statusCode).json(responseHandler(err));
   }
 
