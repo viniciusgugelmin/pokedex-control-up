@@ -12,7 +12,7 @@ class GetFreePokemonsUseCase
     const { count: pokemonsTotal, results: pokemons } =
       await this.pokeApiProvider.getPokemonList({});
 
-    const pokemonsPerHour = pokemonsTotal / 24;
+    const pokemonsPerHour = Math.floor(pokemonsTotal / 24);
     const actualHour = new Date().getHours();
 
     const pokemonsToBeDisplayed = pokemons.slice(
@@ -20,7 +20,7 @@ class GetFreePokemonsUseCase
       (actualHour + 1) * pokemonsPerHour
     );
 
-    return pokemonsToBeDisplayed.map(({ name }) => ({ name }));
+    return pokemonsToBeDisplayed.map(({ name }) => name);
   }
 }
 

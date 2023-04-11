@@ -31,14 +31,14 @@ class PokeApiProvider implements PokeApiProviderDTO.IPokeApiProvider {
 
   public async getPokemonList({ offset = 0, limit = 1279 }) {
     return (await this.service.get(
-      `/pokemon?${offset}&${limit}`
-    )) as PokeApiProviderDTO.GetPokemonListResponseDTO;
+      `/pokemon?offset=${offset}&limit=${limit}`
+    )) as unknown as PokeApiProviderDTO.GetPokemonListResponseDTO;
   }
 
   public async getPokemonByName({ name }) {
     return (await this.service.get(
       `/pokemon/${name}`
-    )) as PokeApiProviderDTO.GetPokemonByNameResponseDTO;
+    )) as unknown as PokeApiProviderDTO.GetPokemonByNameResponseDTO;
   }
 }
 

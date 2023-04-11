@@ -3,11 +3,7 @@ namespace GetFreePokemonsUseCaseDTO {
     execute(): ExecuteResponseDTO;
   }
 
-  export type ExecuteResponseDTO = Promise<
-    {
-      name: string;
-    }[]
-  >;
+  export type ExecuteResponseDTO = Promise<string[]>;
 }
 
 export { GetFreePokemonsUseCaseDTO };
