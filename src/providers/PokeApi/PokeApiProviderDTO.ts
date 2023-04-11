@@ -6,8 +6,8 @@ namespace PokeApiProviderDTO {
   }
 
   export type GetPokemonListDTO = {
-    offset: number;
-    limit: number;
+    offset?: number;
+    limit?: number;
   };
 
   export type GetPokemonListResponseDTO = Promise<{
