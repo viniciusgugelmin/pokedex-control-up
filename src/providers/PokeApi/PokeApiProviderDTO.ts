@@ -2,7 +2,7 @@ namespace PokeApiProviderDTO {
   export interface IPokeApiProvider {
     getPokemonList(data: GetPokemonListDTO): GetPokemonListResponseDTO;
 
-    getPokemonByName(data: GetPokemonByNameDTO): GetPokemonByNameResponseDTO;
+    getPokemon(data: GetPokemonDTO): GetPokemonResponseDTO;
   }
 
   export type GetPokemonListDTO = {
@@ -20,11 +20,11 @@ namespace PokeApiProviderDTO {
     }[];
   }>;
 
-  export type GetPokemonByNameDTO = {
-    name: string;
+  export type GetPokemonDTO = {
+    nameOrId: string | number;
   };
 
-  export type GetPokemonByNameResponseDTO = Promise<{
+  export type GetPokemonResponseDTO = Promise<{
     abilities: {
       ability: {
         name: string;

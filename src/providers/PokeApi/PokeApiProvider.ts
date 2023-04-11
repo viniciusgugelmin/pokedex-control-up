@@ -35,10 +35,10 @@ class PokeApiProvider implements PokeApiProviderDTO.IPokeApiProvider {
     )) as unknown as PokeApiProviderDTO.GetPokemonListResponseDTO;
   }
 
-  public async getPokemonByName({ name }) {
+  public async getPokemon({ nameOrId }) {
     return (await this.service.get(
-      `/pokemon/${name}`
-    )) as unknown as PokeApiProviderDTO.GetPokemonByNameResponseDTO;
+      `/pokemon/${nameOrId}`
+    )) as unknown as PokeApiProviderDTO.GetPokemonResponseDTO;
   }
 }
 
