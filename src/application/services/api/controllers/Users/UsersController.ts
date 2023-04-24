@@ -6,13 +6,15 @@ import { RegisterUserUseCaseDTO } from "../../../../../useCases/RegisterUser/Reg
 import { LogInUserUseCaseDTO } from "../../../../../useCases/LogInUser/LogInUserUseCaseDTO";
 import { GetUserPokemonsUseCaseDTO } from "../../../../../useCases/GetUserPokemons/GetUserPokemonsUseCaseDTO";
 import { GetUserPokemonUseCaseDTO } from "../../../../../useCases/GetUserPokemon/GetUserPokemonUseCaseDTO";
+import { DiscardUserPokemonUseCaseDTO } from "../../../../../useCases/DiscardUserPokemon/DiscardUserPokemonUseCaseDTO";
 
 class UsersController implements UsersControllerDTO.IUsersController {
   constructor(
     private readonly registerUserUseCase: RegisterUserUseCaseDTO.IRegisterUserUseCase,
     private readonly logInUserUseCase: LogInUserUseCaseDTO.ILogInUserUseCase,
     private readonly getUserPokemonsUseCase: GetUserPokemonsUseCaseDTO.IGetUserPokemonsUseCase,
-    private readonly getUserPokemonUseCase: GetUserPokemonUseCaseDTO.IGetUserPokemonUseCase
+    private readonly getUserPokemonUseCase: GetUserPokemonUseCaseDTO.IGetUserPokemonUseCase,
+    private readonly discardUserPokemonUseCase: DiscardUserPokemonUseCaseDTO.IDiscardUserPokemonUseCase
   ) {}
 
   public async signup(req: Request, res: Response) {
@@ -85,6 +87,24 @@ class UsersController implements UsersControllerDTO.IUsersController {
       responseHandler({
         message: "User pokemon fetched successfully",
         data: pokemon,
+      })
+    );
+  }
+
+  public async discardPokemon(
+    req: ExpressCustomTypes.AuthenticatedRequest,
+    res: Response
+  ) {
+    const { id } = req.params;
+
+    await this.discardUserPokemonUseCase.execute({
+      userId: req.user.id,
+      pokemonId: +id,
+    } as DiscardUserPokemonUseCaseDTO.ExecuteDTO);
+
+    return res.json(
+      responseHandler({
+        message: "User pokemon discarded successfully",
       })
     );
   }

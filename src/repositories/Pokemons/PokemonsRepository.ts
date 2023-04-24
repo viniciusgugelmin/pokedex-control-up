@@ -19,6 +19,7 @@ class PokemonsRepository implements PokemonsRepositoryDTO.IPokemonsRepository {
         where: {
           userId,
           pokemonId,
+          deletedAt: null,
         },
       }) || null
     );
@@ -29,6 +30,23 @@ class PokemonsRepository implements PokemonsRepositoryDTO.IPokemonsRepository {
       where: {
         userId,
         deletedAt: null,
+      },
+    });
+  }
+
+  public async deleteUserPokemon({
+    userId,
+    pokemonId,
+  }: PokemonsRepositoryDTO.DeleteUserPokemonDTO) {
+    await this.pokemons.update({
+      where: {
+        userId_pokemonId: {
+          userId,
+          pokemonId,
+        },
+      },
+      data: {
+        deletedAt: new Date(),
       },
     });
   }

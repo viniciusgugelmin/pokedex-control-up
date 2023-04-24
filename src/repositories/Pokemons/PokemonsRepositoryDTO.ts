@@ -9,6 +9,8 @@ namespace PokemonsRepositoryDTO {
     ): FindByUserIdAndPokemonIdResponseDTO;
 
     findByUserId(data: FindByUserIdDTO): FindByUserIdResponseDTO;
+
+    deleteUserPokemon(data: DeleteUserPokemonDTO): DeleteUserPokemonResponseDTO;
   }
 
   export type SaveDTO = {
@@ -31,6 +33,13 @@ namespace PokemonsRepositoryDTO {
   };
 
   export type FindByUserIdResponseDTO = Promise<Pokemon[]>;
+
+  export type DeleteUserPokemonDTO = {
+    userId: number;
+    pokemonId: number;
+  };
+
+  export type DeleteUserPokemonResponseDTO = Promise<void>;
 }
 
 export { PokemonsRepositoryDTO };

@@ -42,4 +42,10 @@ usersRouter.get(
   (req, res) => usersController.getPokemon(req, res)
 );
 
+usersRouter.delete(
+  "/pokemons/:id",
+  (req, res, next) => isAuthenticatedMiddleware.handle(req, res, next),
+  (req, res) => usersController.discardPokemon(req, res)
+);
+
 export { usersRouter };
