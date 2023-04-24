@@ -6,7 +6,7 @@ namespace TokenProviderDTO {
   }
 
   export type ITokenPayload = {
-    id: string;
+    id: number;
   };
 
   export type GenerateDTO = ITokenPayload;

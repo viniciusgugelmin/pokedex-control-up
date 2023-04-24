@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { responseHandler } from "./responseHandler";
 import { AppError } from "../../../../errors/AppError";
 import { ExternalError } from "../../../../errors/ExternalError";
+import { PokemonNotFoundError } from "../../../../errors/PokemonNotFoundError";
+import { UnauthorizedError } from "../../../../errors/UnauthorizedError";
 
 export function errorHandler(
   err: AppError | ExternalError | Error,
@@ -9,7 +11,12 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  if (err instanceof AppError || err instanceof ExternalError) {
+  if (
+    err instanceof AppError ||
+    err instanceof ExternalError ||
+    err instanceof PokemonNotFoundError ||
+    err instanceof UnauthorizedError
+  ) {
     return res.status(err.statusCode).json(responseHandler(err));
   }
 
