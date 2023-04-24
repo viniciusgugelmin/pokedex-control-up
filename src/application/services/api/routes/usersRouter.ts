@@ -36,4 +36,10 @@ usersRouter.get(
   (req, res) => usersController.getPokemons(req, res)
 );
 
+usersRouter.get(
+  "/pokemons/:id",
+  (req, res, next) => isAuthenticatedMiddleware.handle(req, res, next),
+  (req, res) => usersController.getPokemon(req, res)
+);
+
 export { usersRouter };

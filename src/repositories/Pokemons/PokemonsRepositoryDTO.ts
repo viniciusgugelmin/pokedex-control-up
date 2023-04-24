@@ -24,7 +24,7 @@ namespace PokemonsRepositoryDTO {
     pokemonId: number;
   };
 
-  export type FindByUserIdAndPokemonIdResponseDTO = Promise<Pokemon>;
+  export type FindByUserIdAndPokemonIdResponseDTO = Promise<Pokemon | null>;
 
   export type FindByUserIdDTO = {
     userId: number;

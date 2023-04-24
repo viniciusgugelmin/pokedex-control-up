@@ -14,12 +14,14 @@ class PokemonsRepository implements PokemonsRepositoryDTO.IPokemonsRepository {
     userId,
     pokemonId,
   }: PokemonsRepositoryDTO.FindByUserIdAndPokemonIdDTO) {
-    return this.pokemons.findFirst({
-      where: {
-        userId,
-        pokemonId,
-      },
-    });
+    return (
+      this.pokemons.findFirst({
+        where: {
+          userId,
+          pokemonId,
+        },
+      }) || null
+    );
   }
 
   public async findByUserId({ userId }: PokemonsRepositoryDTO.FindByUserIdDTO) {

@@ -16,6 +16,11 @@ namespace UsersControllerDTO {
       req: ExpressCustomTypes.AuthenticatedRequest,
       res: Response
     ): Promise<Response>;
+
+    getPokemon(
+      req: ExpressCustomTypes.AuthenticatedRequest,
+      res: Response
+    ): Promise<Response>;
   }
 }
 
