@@ -4,11 +4,13 @@ import { responseHandler } from "../../handlers";
 import { ExpressCustomTypes } from "../../../../../@types/express";
 import { RegisterUserUseCaseDTO } from "../../../../../useCases/RegisterUser/RegisterUserUseCaseDTO";
 import { LogInUserUseCaseDTO } from "../../../../../useCases/LogInUser/LogInUserUseCaseDTO";
+import { GetUserPokemonsUseCaseDTO } from "../../../../../useCases/GetUserPokemons/GetUserPokemonsUseCaseDTO";
 
 class UsersController implements UsersControllerDTO.IUsersController {
   constructor(
     private readonly registerUserUseCase: RegisterUserUseCaseDTO.IRegisterUserUseCase,
-    private readonly logInUserUseCase: LogInUserUseCaseDTO.ILogInUserUseCase
+    private readonly logInUserUseCase: LogInUserUseCaseDTO.ILogInUserUseCase,
+    private readonly getUserPokemonsUseCase: GetUserPokemonsUseCaseDTO.IGetUserPokemonsUseCase
   ) {}
 
   public async signup(req: Request, res: Response) {
@@ -46,6 +48,22 @@ class UsersController implements UsersControllerDTO.IUsersController {
       responseHandler({
         message: "User authenticated successfully",
         data: req.user,
+      })
+    );
+  }
+
+  public async getPokemons(
+    req: ExpressCustomTypes.AuthenticatedRequest,
+    res: Response
+  ) {
+    const pokemons = await this.getUserPokemonsUseCase.execute({
+      userId: req.user.id,
+    });
+
+    return res.json(
+      responseHandler({
+        message: "User authenticated successfully",
+        data: pokemons,
       })
     );
   }

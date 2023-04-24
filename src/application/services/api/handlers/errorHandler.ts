@@ -4,6 +4,7 @@ import { AppError } from "../../../../errors/AppError";
 import { ExternalError } from "../../../../errors/ExternalError";
 import { PokemonNotFoundError } from "../../../../errors/PokemonNotFoundError";
 import { UnauthorizedError } from "../../../../errors/UnauthorizedError";
+import { PokemonAlreadyCaughtError } from "../../../../errors/PokemonAlreadyCaughtError";
 
 export function errorHandler(
   err: AppError | ExternalError | Error,
@@ -15,7 +16,8 @@ export function errorHandler(
     err instanceof AppError ||
     err instanceof ExternalError ||
     err instanceof PokemonNotFoundError ||
-    err instanceof UnauthorizedError
+    err instanceof UnauthorizedError ||
+    err instanceof PokemonAlreadyCaughtError
   ) {
     return res.status(err.statusCode).json(responseHandler(err));
   }

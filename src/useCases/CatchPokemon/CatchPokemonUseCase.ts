@@ -2,6 +2,7 @@ import { CatchPokemonUseCaseDTO } from "./CatchPokemonUseCaseDTO";
 import { PokeApiProviderDTO } from "../../providers/PokeApi/PokeApiProviderDTO";
 import { PokemonNotFoundError } from "../../errors/PokemonNotFoundError";
 import { PokemonsRepositoryDTO } from "../../repositories/Pokemons/PokemonsRepositoryDTO";
+import { PokemonAlreadyCaughtError } from "../../errors/PokemonAlreadyCaughtError";
 
 class CatchPokemonUseCase
   implements CatchPokemonUseCaseDTO.ICatchPokemonUseCase
@@ -33,6 +34,16 @@ class CatchPokemonUseCase
 
     if (!isPokemonFree) {
       throw new PokemonNotFoundError("Pokemon is not free");
+    }
+
+    const pokemonAlreadyCaught =
+      await this.pokemonsRepository.findByUserIdAndPokemonId({
+        userId,
+        pokemonId: pokemon.id,
+      });
+
+    if (pokemonAlreadyCaught) {
+      throw new PokemonAlreadyCaughtError();
     }
 
     const { base_stat: pokemonLife } = pokemon.stats.find(
