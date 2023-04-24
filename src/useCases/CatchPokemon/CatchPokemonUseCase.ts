@@ -1,15 +1,17 @@
 import { CatchPokemonUseCaseDTO } from "./CatchPokemonUseCaseDTO";
 import { PokeApiProviderDTO } from "../../providers/PokeApi/PokeApiProviderDTO";
 import { PokemonNotFoundError } from "../../errors/PokemonNotFoundError";
+import { PokemonsRepositoryDTO } from "../../repositories/Pokemons/PokemonsRepositoryDTO";
 
 class CatchPokemonUseCase
   implements CatchPokemonUseCaseDTO.ICatchPokemonUseCase
 {
   constructor(
-    private readonly pokeApiProvider: PokeApiProviderDTO.IPokeApiProvider
+    private readonly pokeApiProvider: PokeApiProviderDTO.IPokeApiProvider,
+    private readonly pokemonsRepository: PokemonsRepositoryDTO.IPokemonsRepository
   ) {}
 
-  public async execute({ nameOrId }) {
+  public async execute({ nameOrId, userId }) {
     const pokemon = await this.pokeApiProvider.getPokemon({ nameOrId });
     const { count: pokemonsTotal, results: pokemons } =
       await this.pokeApiProvider.getPokemonList({});
@@ -27,10 +29,18 @@ class CatchPokemonUseCase
     );
 
     if (!isPokemonFree) {
-      throw new PokemonNotFoundError();
+      throw new PokemonNotFoundError("Pokemon is not free");
     }
 
-    // TODO: Save pokemon in database
+    const { base_stat: pokemonLife } = pokemon.stats.find(
+      ({ stat }) => stat.name === "hp"
+    );
+
+    await this.pokemonsRepository.save({
+      id: pokemon.id,
+      userId,
+      life: pokemonLife,
+    });
   }
 }
 
