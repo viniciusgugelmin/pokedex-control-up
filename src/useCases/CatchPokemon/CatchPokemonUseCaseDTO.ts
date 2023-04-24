@@ -5,6 +5,7 @@ namespace CatchPokemonUseCaseDTO {
 
   export type ExecuteDTO = {
     nameOrId: string | number;
+    userId: number;
   };
 
   export type ExecuteResponseDTO = Promise<void>;

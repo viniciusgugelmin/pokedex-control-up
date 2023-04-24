@@ -16,10 +16,11 @@ class UsersController implements UsersControllerDTO.IUsersController {
       req.body as RegisterUserUseCaseDTO.ExecuteDTO
     );
 
-    return res.json(
+    return res.status(201).json(
       responseHandler({
         message: "User registered successfully",
         data: user,
+        statusCode: 201,
       })
     );
   }

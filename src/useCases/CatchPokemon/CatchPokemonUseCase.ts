@@ -11,7 +11,10 @@ class CatchPokemonUseCase
     private readonly pokemonsRepository: PokemonsRepositoryDTO.IPokemonsRepository
   ) {}
 
-  public async execute({ nameOrId, userId }) {
+  public async execute({
+    nameOrId,
+    userId,
+  }: CatchPokemonUseCaseDTO.ExecuteDTO) {
     const pokemon = await this.pokeApiProvider.getPokemon({ nameOrId });
     const { count: pokemonsTotal, results: pokemons } =
       await this.pokeApiProvider.getPokemonList({});

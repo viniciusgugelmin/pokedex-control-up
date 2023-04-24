@@ -20,6 +20,7 @@ export class Server {
 
   private useConfig(): void {
     this.app.use(cors());
+    this.app.use(express.json());
   }
 
   private useRoutes(): void {

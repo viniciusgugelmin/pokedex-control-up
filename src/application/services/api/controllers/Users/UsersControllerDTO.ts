@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ExpressCustomTypes } from "../../../../../@types/express";
 
 namespace UsersControllerDTO {
   export interface IUsersController {
@@ -6,7 +7,10 @@ namespace UsersControllerDTO {
 
     signin(req: Request, res: Response): Promise<Response>;
 
-    auth(req: Request, res: Response): Promise<Response>;
+    auth(
+      req: ExpressCustomTypes.AuthenticatedRequest,
+      res: Response
+    ): Promise<Response>;
   }
 }
 
