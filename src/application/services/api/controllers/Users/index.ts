@@ -4,13 +4,15 @@ import { logInUserUseCase } from "../../../../../useCases/LogInUser";
 import { getUserPokemonsUseCase } from "../../../../../useCases/GetUserPokemons";
 import { getUserPokemonUseCase } from "../../../../../useCases/GetUserPokemon";
 import { discardUserPokemonUseCase } from "../../../../../useCases/DiscardUserPokemon";
+import { feedUserPokemonUseCase } from "../../../../../useCases/FeedUserPokemon";
 
 const usersController = new UsersController(
   registerUserUseCase,
   logInUserUseCase,
   getUserPokemonsUseCase,
   getUserPokemonUseCase,
-  discardUserPokemonUseCase
+  discardUserPokemonUseCase,
+  feedUserPokemonUseCase
 );
 
 export { usersController };

@@ -50,6 +50,24 @@ class PokemonsRepository implements PokemonsRepositoryDTO.IPokemonsRepository {
       },
     });
   }
+
+  public async updateUserPokemon({
+    userId,
+    pokemonId,
+    life,
+  }: PokemonsRepositoryDTO.UpdateUserPokemonDTO) {
+    return this.pokemons.update({
+      where: {
+        userId_pokemonId: {
+          userId,
+          pokemonId,
+        },
+      },
+      data: {
+        life,
+      },
+    });
+  }
 }
 
 export { PokemonsRepository };

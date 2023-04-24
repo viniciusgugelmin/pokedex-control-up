@@ -7,6 +7,7 @@ import { LogInUserUseCaseDTO } from "../../../../../useCases/LogInUser/LogInUser
 import { GetUserPokemonsUseCaseDTO } from "../../../../../useCases/GetUserPokemons/GetUserPokemonsUseCaseDTO";
 import { GetUserPokemonUseCaseDTO } from "../../../../../useCases/GetUserPokemon/GetUserPokemonUseCaseDTO";
 import { DiscardUserPokemonUseCaseDTO } from "../../../../../useCases/DiscardUserPokemon/DiscardUserPokemonUseCaseDTO";
+import { FeedUserPokemonUseCaseDTO } from "../../../../../useCases/FeedUserPokemon/FeedUserPokemonUseCaseDTO";
 
 class UsersController implements UsersControllerDTO.IUsersController {
   constructor(
@@ -14,7 +15,8 @@ class UsersController implements UsersControllerDTO.IUsersController {
     private readonly logInUserUseCase: LogInUserUseCaseDTO.ILogInUserUseCase,
     private readonly getUserPokemonsUseCase: GetUserPokemonsUseCaseDTO.IGetUserPokemonsUseCase,
     private readonly getUserPokemonUseCase: GetUserPokemonUseCaseDTO.IGetUserPokemonUseCase,
-    private readonly discardUserPokemonUseCase: DiscardUserPokemonUseCaseDTO.IDiscardUserPokemonUseCase
+    private readonly discardUserPokemonUseCase: DiscardUserPokemonUseCaseDTO.IDiscardUserPokemonUseCase,
+    private readonly feedUserPokemonUseCase: FeedUserPokemonUseCaseDTO.IFeedUserPokemonUseCase
   ) {}
 
   public async signup(req: Request, res: Response) {
@@ -105,6 +107,27 @@ class UsersController implements UsersControllerDTO.IUsersController {
     return res.json(
       responseHandler({
         message: "User pokemon discarded successfully",
+      })
+    );
+  }
+
+  public async feedPokemon(
+    req: ExpressCustomTypes.AuthenticatedRequest,
+    res: Response
+  ) {
+    const { id } = req.params;
+    const { food } = req.body;
+
+    const pokemon = await this.feedUserPokemonUseCase.execute({
+      userId: req.user.id,
+      pokemonId: +id,
+      food,
+    } as FeedUserPokemonUseCaseDTO.ExecuteDTO);
+
+    return res.json(
+      responseHandler({
+        message: "User pokemon fed successfully",
+        data: pokemon,
       })
     );
   }

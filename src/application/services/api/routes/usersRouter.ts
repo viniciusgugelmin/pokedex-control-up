@@ -2,7 +2,11 @@ import { Router } from "express";
 import { usersController } from "../controllers/Users";
 import { isAuthenticatedMiddleware } from "../../../../middlewares/IsAuthenticated";
 import { validateSchemaMiddleware } from "../../../../middlewares/ValidateSchema";
-import { signinBodySchema, signupBodySchema } from "../../../../schemas/users";
+import {
+  feedPokemonBodySchema,
+  signinBodySchema,
+  signupBodySchema,
+} from "../../../../schemas/users";
 
 const usersRouter = Router();
 
@@ -46,6 +50,16 @@ usersRouter.delete(
   "/pokemons/:id",
   (req, res, next) => isAuthenticatedMiddleware.handle(req, res, next),
   (req, res) => usersController.discardPokemon(req, res)
+);
+
+usersRouter.patch(
+  "/pokemons/:id/feed",
+  validateSchemaMiddleware.handle({
+    schema: feedPokemonBodySchema,
+    type: "body",
+  }),
+  (req, res, next) => isAuthenticatedMiddleware.handle(req, res, next),
+  (req, res) => usersController.feedPokemon(req, res)
 );
 
 export { usersRouter };

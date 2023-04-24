@@ -11,6 +11,8 @@ namespace PokemonsRepositoryDTO {
     findByUserId(data: FindByUserIdDTO): FindByUserIdResponseDTO;
 
     deleteUserPokemon(data: DeleteUserPokemonDTO): DeleteUserPokemonResponseDTO;
+
+    updateUserPokemon(data: UpdateUserPokemonDTO): UpdateUserPokemonResponseDTO;
   }
 
   export type SaveDTO = {
@@ -40,6 +42,14 @@ namespace PokemonsRepositoryDTO {
   };
 
   export type DeleteUserPokemonResponseDTO = Promise<void>;
+
+  export type UpdateUserPokemonDTO = {
+    userId: number;
+    pokemonId: number;
+    life: number;
+  };
+
+  export type UpdateUserPokemonResponseDTO = Promise<Pokemon>;
 }
 
 export { PokemonsRepositoryDTO };

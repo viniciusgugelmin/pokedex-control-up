@@ -11,4 +11,8 @@ const signinBodySchema = Joi.object({
   password: Joi.string().required(),
 });
 
-export { signupBodySchema, signinBodySchema };
+const feedPokemonBodySchema = Joi.object({
+  food: Joi.string().valid("seed", "apple", "watermelon").required(),
+});
+
+export { signupBodySchema, signinBodySchema, feedPokemonBodySchema };
