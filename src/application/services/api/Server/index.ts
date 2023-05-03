@@ -4,6 +4,8 @@ import "express-async-errors";
 import { environment } from "../../../config/environment";
 import { errorHandler } from "../handlers";
 import { routes } from "../routes";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "../../../config/docs/swagger.json";
 
 const { API_PORT, DOMAIN } = environment;
 
@@ -24,6 +26,7 @@ export class Server {
   }
 
   private useRoutes(): void {
+    this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     this.app.use("/", routes);
   }
 

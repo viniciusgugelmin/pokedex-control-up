@@ -34,14 +34,14 @@ class UsersController implements UsersControllerDTO.IUsersController {
   }
 
   public async signin(req: Request, res: Response) {
-    const user = await this.logInUserUseCase.execute(
+    const userWithToken = await this.logInUserUseCase.execute(
       req.body as LogInUserUseCaseDTO.ExecuteDTO
     );
 
     return res.json(
       responseHandler({
         message: "User logged in successfully",
-        data: user,
+        data: userWithToken,
       })
     );
   }
