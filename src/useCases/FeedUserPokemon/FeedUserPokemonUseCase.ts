@@ -59,7 +59,7 @@ class FeedUserPokemonUseCase
     const pokemonUpdated = await this.pokemonsRepository.updateUserPokemon({
       userId,
       pokemonId,
-      life: newLife > maxLife ? maxLife : newLife,
+      life: newLife > maxLife ? maxLife : parseInt(newLife.toString()),
     });
 
     return {
