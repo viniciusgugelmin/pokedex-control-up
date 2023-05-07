@@ -8,6 +8,7 @@ import { GetUserPokemonsUseCaseDTO } from "../../../../../useCases/GetUserPokemo
 import { GetUserPokemonUseCaseDTO } from "../../../../../useCases/GetUserPokemon/GetUserPokemonUseCaseDTO";
 import { DiscardUserPokemonUseCaseDTO } from "../../../../../useCases/DiscardUserPokemon/DiscardUserPokemonUseCaseDTO";
 import { FeedUserPokemonUseCaseDTO } from "../../../../../useCases/FeedUserPokemon/FeedUserPokemonUseCaseDTO";
+import { UpdateUserPokemonLifeAfterBattleUseCaseDTO } from "../../../../../useCases/UpdateUserPokemonLifeAfterBattle/UpdateUserPokemonLifeAfterBattleUseCaseDTO";
 
 class UsersController implements UsersControllerDTO.IUsersController {
   constructor(
@@ -16,7 +17,8 @@ class UsersController implements UsersControllerDTO.IUsersController {
     private readonly getUserPokemonsUseCase: GetUserPokemonsUseCaseDTO.IGetUserPokemonsUseCase,
     private readonly getUserPokemonUseCase: GetUserPokemonUseCaseDTO.IGetUserPokemonUseCase,
     private readonly discardUserPokemonUseCase: DiscardUserPokemonUseCaseDTO.IDiscardUserPokemonUseCase,
-    private readonly feedUserPokemonUseCase: FeedUserPokemonUseCaseDTO.IFeedUserPokemonUseCase
+    private readonly feedUserPokemonUseCase: FeedUserPokemonUseCaseDTO.IFeedUserPokemonUseCase,
+    private readonly updateUserPokemonLifeAfterBattleUseCase: UpdateUserPokemonLifeAfterBattleUseCaseDTO.IUpdateUserPokemonLifeAfterBattleUseCase
   ) {}
 
   public async signup(req: Request, res: Response) {
@@ -128,6 +130,24 @@ class UsersController implements UsersControllerDTO.IUsersController {
       responseHandler({
         message: "User pokemon fed successfully",
         data: pokemon,
+      })
+    );
+  }
+
+  public async updateLifeAfterBattle(
+    req: ExpressCustomTypes.AuthenticatedRequest,
+    res: Response
+  ) {
+    const { id, life } = req.params;
+    await this.updateUserPokemonLifeAfterBattleUseCase.execute({
+      userId: req.user.id,
+      pokemonId: +id,
+      life: +life,
+    } as UpdateUserPokemonLifeAfterBattleUseCaseDTO.ExecuteDTO);
+
+    return res.json(
+      responseHandler({
+        message: "User pokemon life updated successfully",
       })
     );
   }

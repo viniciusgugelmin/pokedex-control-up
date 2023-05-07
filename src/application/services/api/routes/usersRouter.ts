@@ -62,4 +62,10 @@ usersRouter.patch(
   (req, res) => usersController.feedPokemon(req, res)
 );
 
+usersRouter.patch(
+  "/pokemons/:id/battle/:life",
+  (req, res, next) => isAuthenticatedMiddleware.handle(req, res, next),
+  (req, res) => usersController.updateLifeAfterBattle(req, res)
+);
+
 export { usersRouter };

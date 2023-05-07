@@ -6,13 +6,15 @@ import { getUserPokemonUseCase } from "../../../../../useCases/GetUserPokemon";
 import { discardUserPokemonUseCase } from "../../../../../useCases/DiscardUserPokemon";
 import { feedUserPokemonUseCase } from "../../../../../useCases/FeedUserPokemon";
 
+let updateUserPokemonLifeAfterBattleUseCase;
 const usersController = new UsersController(
   registerUserUseCase,
   logInUserUseCase,
   getUserPokemonsUseCase,
   getUserPokemonUseCase,
   discardUserPokemonUseCase,
-  feedUserPokemonUseCase
+  feedUserPokemonUseCase,
+  updateUserPokemonLifeAfterBattleUseCase
 );
 
 export { usersController };

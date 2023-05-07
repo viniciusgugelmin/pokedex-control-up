@@ -275,7 +275,7 @@
       }
     },
     "/users/pokemons/{id}": {
-      "post": {
+      "get": {
         "summary": "Get authenticated user's pokemon",
         "tags": ["Users"],
         "security": [
@@ -419,7 +419,7 @@
       }
     },
     "/users/pokemons/{id}/feed": {
-      "put": {
+      "patch": {
         "summary": "Feed authenticated user's pokemon",
         "tags": ["Users"],
         "security": [
@@ -506,6 +506,202 @@
           },
           "400": {
             "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemons": {
+      "get": {
+        "summary": "Get available free pokemons",
+        "tags": ["Pokemons"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Free pokemons retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemons/{nameOrId}": {
+      "post": {
+        "summary": "Catch a pokemon",
+        "tags": ["Pokemons"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "nameOrId",
+            "in": "path",
+            "required": true,
+            "description": "Pokemon name or id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pokemon caught",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Pokemon already caught",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon is not available to be caught",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/pokemons/{id}/battle/{life}": {
+      "patch": {
+        "summary": "Update pokemon life after battle",
+        "tags": ["Users"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pokemonId",
+            "in": "path",
+            "required": true,
+            "description": "Pokemon id"
+          },
+          {
+            "name": "pokemonLife",
+            "in": "path",
+            "required": true,
+            "description": "Pokemon life"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pokemon life updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
