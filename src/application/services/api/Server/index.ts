@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import "express-async-errors";
 import { environment } from "../../../config/environment";
+import { queues } from "../../messageBroker/MessageBroker/Queues";
+import { messageBroker } from "../../messageBroker/MessageBroker";
 import { errorHandler } from "../handlers";
 import { routes } from "../routes";
 import swaggerUi from "swagger-ui-express";
@@ -25,6 +27,16 @@ export class Server {
     this.app.use(express.json());
   }
 
+  private useExternalConfig(): void {
+    messageBroker.init().then(() => {
+      console.log("Message broker is running");
+
+      messageBroker.getQueues(queues).then(() => {
+        console.log("Queues are being listened");
+      });
+    });
+  }
+
   private useRoutes(): void {
     this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     this.app.use("/", routes);
@@ -37,6 +49,7 @@ export class Server {
   public init() {
     this.app.listen(this.port, async () => {
       console.log(`API is running on: ${this.domain}`);
+      this.useExternalConfig();
     });
   }
 }

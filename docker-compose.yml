@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  pc-message-broker:
+    container_name: pc-message-broker
+    image: rabbitmq:3-management-alpine
+    restart: always
+    ports:
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+      - ${RABBITMQ_COMUNICATION_PORT}:${RABBITMQ_COMUNICATION_PORT}
+    expose:
+      - ${RABBITMQ_PORT}
+      - ${RABBITMQ_COMUNICATION_PORT}
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    volumes:
+      - rabbitmq:/etc/rabbitmq/
+      - rabbitmq-data:/var/lib/rabbitmq/
+      - rabbitmq-logs:/var/log/rabbitmq/
+
+volumes:
+  rabbitmq:
+  rabbitmq-data:
+  rabbitmq-logs:
