@@ -2,9 +2,9 @@ import { MessageBrokerDTO } from "../MessageBrokerDTO";
 import { Channel } from "amqplib";
 
 namespace QueueDTO {
-  export type queueName = "hello";
+  export type queueName = "hello" | "battle";
 
-  export type exchangeName = "hello";
+  export type exchangeName = "default";
 
   export interface IQueue {
     name: queueName;

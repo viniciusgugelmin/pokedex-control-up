@@ -5,7 +5,7 @@ import { MessageBrokerDTO } from "../MessageBrokerDTO";
 class QueueAbstract {
   constructor(public readonly name: QueueDTO.queueName) {}
 
-  protected fromMessage(message: Message): string {
+  protected fromMessage(message: Message): any {
     return JSON.parse(message.content.toString());
   }
 
