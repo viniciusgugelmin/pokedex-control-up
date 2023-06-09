@@ -4,6 +4,8 @@ import { Channel } from "amqplib";
 namespace QueueDTO {
   export type queueName = "hello";
 
+  export type exchangeName = "hello";
+
   export interface IQueue {
     name: queueName;
 

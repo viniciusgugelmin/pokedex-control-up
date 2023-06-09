@@ -31,6 +31,18 @@ export class MessageBroker
     return this.channel.sendToQueue(queue, MessageBroker.toMessage(body));
   }
 
+  public async sendToExchange({
+    exchange,
+    routingKey,
+    body,
+  }: MessageBrokerDTO.SendToExchangeDTO): MessageBrokerDTO.SendToExchangeResponseDTO {
+    return this.channel.publish(
+      exchange,
+      routingKey,
+      MessageBroker.toMessage(body)
+    );
+  }
+
   public async consume({
     queue,
     channel,

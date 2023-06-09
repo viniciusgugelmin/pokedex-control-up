@@ -18,8 +18,15 @@ class MessageBrokerAbstract {
   }
 
   protected async listenQueues(messageBroker: MessageBrokerDTO.IMessageBroker) {
+    const defaultExchange = "default";
+
+    await this.channel.assertExchange(defaultExchange, "direct", {
+      durable: true,
+    });
+
     for (const { queue, name } of this.queues) {
       await this.channel.assertQueue(name);
+      await this.channel.bindQueue(name, defaultExchange, name);
       await queue.listen(messageBroker, this.channel);
     }
   }
